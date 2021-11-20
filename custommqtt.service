@@ -1,0 +1,10 @@
+[Unit]
+Description=Custom MQTT devices for home assistant
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/sudo /usr/bin/python3 /home/pi/lightServer/main.py
+
+[Install]
+WantedBy=multi-user.target
