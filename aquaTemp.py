@@ -2,13 +2,8 @@ import requests, json, os, time, globalVars
 
 filename = os.path.basename(__file__)
 
-
-
-def clearConsole():
-    command = 'clear'
-    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
-        command = 'cls'
-    os.system(command)
+device_code = "34EAE797DEF6"
+INTERVAL = 60
 
 class Heater:
 	def __init__(self, channel):
@@ -54,7 +49,7 @@ class Heater:
 		self.iterate()
 	
 	def iterate(self):
-		if (time.time() >= self.lastTime + 60):
+		if (time.time() >= self.lastTime + INTERVAL):
 			self.lastTime = time.time()
 			self.update()
 		else: 
@@ -62,9 +57,7 @@ class Heater:
 	
 	def update(self):	
 		url = "http://cloud.linked-go.com:84/cloudservice/api/app/device/getDataByCode.json"
-		myobj = {"device_code":"34EAE797DEF6", "protocal_codes": [        
-			"Power", 	# Power
-			"Mode", 	# Mode Temp
+			"device_code": device_code,
 		# "Manual-mute", 
 			"T02", 		# In Temp
 			"2074",		# Flow Sensor
@@ -140,12 +133,12 @@ class Heater:
 		json = {
 			"param": [
 				{
-					"device_code": "34EAE797DEF6",
+					"device_code": device_code,
 					"protocol_code": "R02",
 					"value": f"{int(float(self.set_temp))}"
 				},
 				{
-					"device_code": "34EAE797DEF6",
+					"device_code": device_code,
 					"protocol_code": "Set_Temp",
 					"value": f"{int(float(self.set_temp))}"
 				},
