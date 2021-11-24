@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import aquaTemp, lightStrip, globalVars
 
 if (__name__ == "__main__"):
