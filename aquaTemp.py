@@ -17,7 +17,7 @@ class Heater:
 		self.mode = 0
 		self.flow = 0
 		self.temp = 0
-		self.out_temp = 0
+		self.ambient_temp = 0
 		self.set_temp = 0
 
 		globalVars.listeners["update"].append(self.update)
@@ -94,6 +94,7 @@ class Heater:
 
 			self.temp = float([item for item in res["object_result"] if item.get('code') == "T02"][0]["value"])
 			self.set_temp = float([item for item in res["object_result"] if item.get('code') == "Set_Temp"][0]["value"])
+			self.ambient_temp = float([item for item in res["object_result"] if item.get('code') == "T05"][0]["value"])
 
 			self.update_status()
 		
@@ -149,8 +150,12 @@ class Heater:
 
 
 	def log(self):
-		clearConsole()
-		print(f"==== Stats at {time.strftime('%H:%M:%S', time.localtime())} ====")
+		print(f"==== Data as of {time.strftime('%H:%M:%S', time.localtime())} for device: {device_code} ====")
+		print(f"Channel: {self.channel}")
+		print(f"Headers: {self.headers}")
+		print(f"Power: {self.power}")
 		print(f"Mode: {self.mode}")
-		print(f"Temp: {self.temp}")
+		print(f"Flow: {self.flow}")
 		print(f"Set Temp: {self.set_temp}")
+		print(f"Temp: {self.temp}")
+		print(f"Ambient: {self.ambient_temp}")
