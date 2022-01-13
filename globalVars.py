@@ -13,6 +13,8 @@ def init():
 	client.on_connect = on_connect
 	client.on_message = on_message
 
+	global updateLight
+
 def on_message(client, userdata, message):
 	if (message.topic == "homeassistant/status"):
 		for i in range(len(listeners["update"])):
